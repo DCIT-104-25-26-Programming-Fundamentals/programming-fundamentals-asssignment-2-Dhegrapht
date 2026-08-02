@@ -80,3 +80,76 @@
 #include <string>
 using namespace std;
 
+void addTask(vector<string>& tasks) {
+    cout << "Enter task: ";
+    string description;
+    getline(cin, description);
+    tasks.push_back(description);
+    cout << "Task added: \"" << description << "\"" << endl;
+}
+
+void viewTasks(const vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your task list is empty!" << endl;
+        return;
+    }
+    cout << "Your Tasks:" << endl;
+    for (int i = 0; i < tasks.size(); i++) {
+        cout << (i + 1) << ". " << tasks[i] << endl;
+    }
+}
+
+void deleteTask(vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "No tasks to delete!" << endl;
+        return;
+    }
+    viewTasks(tasks);
+
+    cout << "Enter task number to delete: ";
+    int num;
+    cin >> num;
+    cin.ignore();
+
+    int index = num - 1;
+    if (index >= 0 && index < tasks.size()) {
+        string removed = tasks[index];
+        tasks.erase(tasks.begin() + index);
+        cout << "Task \"" << removed << "\" has been removed." << endl;
+    } else {
+        cout << "Error: Invalid task number." << endl;
+    }
+}
+
+int main() {
+    vector<string> tasks;
+    int choice;
+
+    while (true) {
+        cout << "\n============================" << endl;
+        cout << "     TO-DO LIST MENU" << endl;
+        cout << "============================" << endl;
+        cout << "1. Add task" << endl;
+        cout << "2. View tasks" << endl;
+        cout << "3. Delete task" << endl;
+        cout << "4. Quit" << endl;
+        cout << "Enter your choice (1-4): ";
+        cin >> choice;
+        cin.ignore();
+
+        if (choice == 1) {
+            addTask(tasks);
+        } else if (choice == 2) {
+            viewTasks(tasks);
+        } else if (choice == 3) {
+            deleteTask(tasks);
+        } else if (choice == 4) {
+            cout << "Goodbye!" << endl;
+            break;
+        } else {
+            cout << "Invalid choice. Please enter 1-4." << endl;
+        }
+    }
+
+    return 0;
+}
